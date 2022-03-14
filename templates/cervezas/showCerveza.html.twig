@@ -1,0 +1,21 @@
+{% extends 'cervezas/base.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col text-center"><h2>{{cerveza.marca}}</h2></div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h2>{{cerveza.tipo}}</h2>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col">{{cerveza.descripcion}}</div>
+                </div>
+                <div class="row">
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
