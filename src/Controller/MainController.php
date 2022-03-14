@@ -7,6 +7,7 @@ use App\Entity\Cerveza;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,51 +15,38 @@ use Symfony\Component\Routing\Annotation\Route;
 class MainController extends AbstractController
 {
 
-    #[Route('/cerveza')]
-    public function showCerveza()
+    #[Route('/cerveza/{id}', name:"showCerveza")]
+    public function showCerveza($id, EntityManagerInterface $doctrine)
     {
-        $cerveza = [
-            "marca"=>"Cerveza Bud Light",
-            "tipo"=>"Lager",
-            "descripcion"=>"Esta bebida amarilla contiene pocas calorías y su grado de alcohol es de 4.2%.  A pesar de no tener muchos años de trayectoria en comparación a otras cervezas que veremos luego, Bud Light ha alcanzado gran popularidad en muchos países; siendo jóvenes y mujeres la población que más consume de esta bebida.",
-            "img"=>"https://www.cervezataf.com/wp-content/uploads/2021/05/cerveza-bud-light.jpg",
+            $repo = $doctrine ->getRepository(Cerveza::class);
+            $cerveza = $repo -> find($id);
+
+        // $cerveza = [
+        //     "marca"=>"Cerveza Bud Light",
+        //     "tipo"=>"Lager",
+        //     "descripcion"=>"Esta bebida amarilla contiene pocas calorías y su grado de alcohol es de 4.2%.  A pesar de no tener muchos años de trayectoria en comparación a otras cervezas que veremos luego, Bud Light ha alcanzado gran popularidad en muchos países; siendo jóvenes y mujeres la población que más consume de esta bebida.",
+        //     "img"=>"https://www.cervezataf.com/wp-content/uploads/2021/05/cerveza-bud-light.jpg",
             
-        ];
+        // ];
         return $this->render('cervezas/showCerveza.html.twig', ["cerveza"=>$cerveza]);
     }
 
-    #[Route('/cervezas')]
+    #[Route('/cervezas', name : "listCervezas")]
     public function listCerveza(EntityManagerInterface $doctrine)
     {
 
             $repo=$doctrine ->getRepository(Cerveza::class);
             $cervezas= $repo ->findAll();
 
-        // $cervezas = [
-        //     ["marca"=>"Stella Artois",
-        //     "tipo"=>"Lager",
-        //     "descripcion"=>"Su color dorado brillante, espuma consistente y el característico sabor de la cerveza tipo lager provoca interés en los amantes de esta bebida. Logrando generar competencia con los grandes mercados de Estados Unidos y de Reino Unido.",
-        //     "img"=>"https://www.cervezataf.com/wp-content/uploads/2021/05/cerveza-stella-artois.jpg"],
-
-
-        //     ["marca"=>"Heineken",
-        //     "tipo"=>"Lager",
-        //     "descripcion"=>"Se considera una bebida de muy alta calidad, siendo esta marca la responsable de impulsar el consumo de la cerveza en más de 150 países.  Es una de las cervezas más vendidas en toda Europa, logrando gran alcance en el mercado americano y asiático donde existe una competencia considerable.",
-        //     "img"=>"https://www.cervezataf.com/wp-content/uploads/2021/05/cerveza-heineken.jpg"],
-
-
-        //     ["marca"=>"Budweiser",
-        //     "tipo"=>"Lager",
-        //     "descripcion"=>"Su proceso de elaboración de 30 días y su maduración en virutas de madera de haya le da un sabor característico que muchos demandan continuamente.",
-        //     "img"=>"https://www.cervezataf.com/wp-content/uploads/2021/05/cerveza-budweiser.jpg"],
-
-        // ];
+      
 
         return $this->render('cervezas/listCerveza.html.twig', ["cervezas"=>$cervezas]);
     }
 
     #[Route('/insert/cerveza')]
-    public function insertCerveza(EntityManagerInterface $doctrine){
+    public function insertCerveza(EntityManagerInterface $doctrine, Request $request){
+
+      
 
         $cerveza  = new Cerveza();
         $cerveza -> setMarca("Snow");
