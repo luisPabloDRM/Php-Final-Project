@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Cerveza;
+use App\Form\CerveType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -67,6 +68,22 @@ class MainController extends AbstractController
         $doctrine ->flush();
 
         return $this->render ('cervezas/showCerveza.html.twig', ['cerveza2' =>$cerveza2]);
+    }
+
+    #[Route('/new/cerveza', name:'newCerveza')]
+
+    public function newCerveza (Request $request, EntityManagerInterface $doctrine)
+    {
+        $form = $this -> createForm(CerveType::class);
+        $form -> handleRequest ($request);
+
+        if($form -> isSubmitted()&& $form ->isValid()){
+            $cerveza = $form ->getData();
+        }
+        $doctrine ->persist ($cerveza);
+        $doctrine ->flush();
+
+        return $this -> renderForm('cervezas/insertCerveza.html.twig', ['cervezaForm' => $form ]);
     }
 
 

@@ -1,0 +1,15 @@
+{% extends 'cervezas/base.html.twig' %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <p>{{message}}</p>
+
+    {% endfor %}
+
+    {{ form_start(cervezaForm) }}
+        {{ form_widget(cervezaForm) }}
+        <button type="submit">Añadir</button>
+    {{ form_end(cervezaForm) }}
+
+{% endblock %}
