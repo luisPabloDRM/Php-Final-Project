@@ -79,10 +79,13 @@ class MainController extends AbstractController
 
         if($form -> isSubmitted()&& $form ->isValid()){
             $cerveza = $form ->getData();
-        }
+       
         $doctrine ->persist ($cerveza);
         $doctrine ->flush();
 
+        $this -> addFlash('Añadida', 'CERVEZA AÑADIDA CORRECTAMENTE');
+        return $this -> redirectToRoute('showCerveza',['id' => $cerveza -> getId()] );
+ }
         return $this -> renderForm('cervezas/insertCerveza.html.twig', ['cervezaForm' => $form ]);
     }
 
