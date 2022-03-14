@@ -22,6 +22,9 @@ class Cerveza
     #[ORM\Column(type: 'text')]
     private $descripcion;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $img;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class Cerveza
     public function setDescripcion(string $descripcion): self
     {
         $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(string $img): self
+    {
+        $this->img = $img;
 
         return $this;
     }

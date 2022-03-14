@@ -2,9 +2,10 @@
 {% block body %}
     <h2>Listado de Cervezas </h2>
     <div class="row row-cols-1 row-cols-md-2">
-        {% for cerveza in Cervezas %}
+        {% for cerveza in cervezas %}
             <div class="col mb-4">
                 <div class="card" style="width: 18rem;">
+                <img src="{{cerveza.img}}" class="card-img-top">
                     <h3 class="card-title">{{cerveza.marca | default ("Estrella")}}</h3>
                     <div class="card-body">
                         <h3 class="card-title">{{cerveza.tipo | default ("Lager")}}</h3>
