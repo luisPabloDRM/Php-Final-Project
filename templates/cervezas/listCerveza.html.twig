@@ -11,6 +11,7 @@
                         <h3 class="card-title">{{cerveza.tipo | default ("Lager")}}</h3>
                         <p class="card-text">{{cerveza.descripcion}}</p>
                         <a href=" {{ path( 'showCerveza', {id: cerveza.id} ) }}" class="btn btn-primary">Más Info</a>
+                        <a href=" {{ path( 'deleteCerveza', {id: cerveza.id} ) }}" class="btn btn-primary">Borrar</a>
                     </div>
                 </div>
             </div>

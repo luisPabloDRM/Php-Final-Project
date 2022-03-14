@@ -89,5 +89,20 @@ class MainController extends AbstractController
         return $this -> renderForm('cervezas/insertCerveza.html.twig', ['cervezaForm' => $form ]);
     }
 
+    #[Route('/delete/cerveza/{id}', name:'deleteCerveza')]
+    public function deleteCerveza($id, EntityManagerInterface $doctrine)
+    {
+        $user = $this->getUser();
+
+        $repo = $doctrine->getRepository(Cerveza::class);
+        $cerveza = $repo->find($id);
+
+        $doctrine->remove($cerveza);
+        $doctrine->flush();
+
+        return $this->redirectToRoute("listCervezas");
+    }
+
+
 
 };
