@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Cerveza;
 use App\Form\CerveType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,6 +18,8 @@ class MainController extends AbstractController
 {
 
     #[Route('/cerveza/{id}', name:"showCerveza")]
+
+    #[IsGranted('ROLE_ADMIN')]
     public function showCerveza($id, EntityManagerInterface $doctrine)
     {
             $repo = $doctrine ->getRepository(Cerveza::class);
@@ -33,6 +36,7 @@ class MainController extends AbstractController
     }
 
     #[Route('/cervezas', name : "listCervezas")]
+    #[IsGranted('ROLE_USER')]
     public function listCerveza(EntityManagerInterface $doctrine)
     {
 
